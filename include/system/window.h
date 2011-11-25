@@ -21,7 +21,7 @@
 #include <sys/cdefs.h>
 #include <system/graphics.h>
 #include <cutils/native_handle.h>
-
+//#include <hardware/hwcomposer.h>
 __BEGIN_DECLS
 
 /*****************************************************************************/
@@ -213,6 +213,29 @@ enum {
     NATIVE_WINDOW_TRANSFORM_HINT = 8,
 };
 
+#if 0
+enum
+{
+    NATIVE_WINDOW_CMD_SETFRAMEPARA          = HWC_LAYER_SETFRAMEPARA,
+    NATIVE_WINDOW_CMD_SETVIDEOPARA          = HWC_LAYER_SETVIDEOPARA,
+    NATIVE_WINDOW_CMD_GETCURFRAMEPARA       = HWC_LAYER_GETCURFRAMEPARA,
+    NATIVE_WINDOW_CMD_SETSCREEN             = HWC_LAYER_SETSCREEN,
+    NATIVE_WINDOW_CMD_SHOW                  = HWC_LAYER_SHOW,
+    NATIVE_WINDOW_CMD_SET3DMODE             = HWC_LAYER_SET3DMODE,    
+    NATIVE_WINDOW_CMD_SETFORMAT             = HWC_LAYER_SETFORMAT,    
+    NATIVE_WINDOW_CMD_VPPON                 = HWC_LAYER_VPPON,    
+    NATIVE_WINDOW_CMD_VPPGETON              = HWC_LAYER_VPPGETON,    
+    NATIVE_WINDOW_CMD_SETLUMASHARP          = HWC_LAYER_SETLUMASHARP,    
+    NATIVE_WINDOW_CMD_GETLUMASHARP          = HWC_LAYER_GETLUMASHARP,    
+    NATIVE_WINDOW_CMD_SETCHROMASHARP        = HWC_LAYER_SETCHROMASHARP,    
+    NATIVE_WINDOW_CMD_GETCHROMASHARP        = HWC_LAYER_GETCHROMASHARP,    
+    NATIVE_WINDOW_CMD_SETWHITEEXTEN         = HWC_LAYER_SETWHITEEXTEN,    
+    NATIVE_WINDOW_CMD_GETWHITEEXTEN         = HWC_LAYER_GETWHITEEXTEN,    
+    NATIVE_WINDOW_CMD_SETBLACKEXTEN         = HWC_LAYER_SETBLACKEXTEN,    
+    NATIVE_WINDOW_CMD_GETBLACKEXTEN         = HWC_LAYER_GETBLACKEXTEN
+};
+#endif
+
 /* valid operations for the (*perform)() hook */
 enum {
     NATIVE_WINDOW_SET_USAGE                 =  0,
@@ -230,6 +253,8 @@ enum {
     NATIVE_WINDOW_UNLOCK_AND_POST           = 12,   /* private */
     NATIVE_WINDOW_API_CONNECT               = 13,   /* private */
     NATIVE_WINDOW_API_DISCONNECT            = 14,   /* private */
+    NATIVE_WINDOW_SETPARAMETER              = 50,
+    NATIVE_WINDOW_GETPARAMETER              = 51
 };
 
 /* parameter for NATIVE_WINDOW_[API_][DIS]CONNECT */
@@ -251,6 +276,10 @@ enum {
     /* Buffers will be queued by the the camera HAL.
      */
     NATIVE_WINDOW_API_CAMERA = 4,
+
+    NATIVE_WINDOW_API_MEDIA_HW = 5,
+
+    NATIVE_WINDOW_API_CAMERA_HW = 6,
 };
 
 /* parameter for NATIVE_WINDOW_SET_BUFFERS_TRANSFORM */

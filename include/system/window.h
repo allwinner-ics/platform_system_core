@@ -534,6 +534,13 @@ static inline int native_window_set_buffers_geometry(
             w, h, format);
 }
 
+static inline int native_window_set_buffers_geometryex(
+        struct ANativeWindow* window,
+        int w, int h, int format,int screenid)
+{
+    return window->perform(window, NATIVE_WINDOW_SET_BUFFERS_GEOMETRY,
+            w, h, format,screenid);
+}
 /*
  * native_window_set_buffers_dimensions(..., int w, int h)
  * All buffers dequeued after this call will have the dimensions specified.

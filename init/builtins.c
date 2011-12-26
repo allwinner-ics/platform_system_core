@@ -805,7 +805,7 @@ int do_setupfs(int argc, char **argv)
 }
 int do_format_userdata(int argc, char **argv)
 {	
-	const char *devicePath = "/dev/block/nandh";	
+	const char *devicePath = argv[1];	
 	char bootsector[512];
 	char lable[32];
 	int fd;
@@ -823,21 +823,21 @@ int do_format_userdata(int argc, char **argv)
 	close(fd);
 	if( (bootsector[510]==0x55) && (bootsector[511]==0xaa) ) 
 	{	
-		ERROR("dont need format /dev/block/nandh");	
+		ERROR("dont need format %s", devicePath);	
 		return 1;
 	}
 	else // ∏Ò ΩªØ
 	{
-		ERROR("start format /dev/block/nandh");
+		ERROR("start format %s", devicePath);
 		child = fork();		
     	if (child == 0) {
-    		ERROR("fork to format /dev/block/nandh");
-        	execl("/system/bin/logwrapper","/system/bin/logwrapper","/system/bin/newfs_msdos","-F","32","-O","android","-c","8", "-L",argv[1],devicePath, NULL);
+    		ERROR("fork to format %s", devicePath);
+        	execl("/system/bin/logwrapper","/system/bin/logwrapper","/system/bin/newfs_msdos","-F","32","-O","android","-c","8", "-L",argv[2],argv[1], NULL);
         	exit(-1);
    		}
-   		ERROR("wait for format /dev/block/nandh");
+   		ERROR("wait for format %s", devicePath);
    		while (waitpid(-1, &status, 0) != child) ;
-   		ERROR("format /dev/block/nandh ok");
+   		ERROR("format %s ok", devicePath);
    		return 1;
 	}  
 }

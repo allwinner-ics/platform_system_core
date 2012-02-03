@@ -142,6 +142,9 @@ enum {
      * Stop the face detection.
      */
     CAMERA_CMD_STOP_FACE_DETECTION = 7,
+
+	// add command
+	CAMERA_CMD_SET_SCREEN_ID = 0xFF000000,
 };
 
 /** camera fatal errors */

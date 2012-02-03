@@ -571,6 +571,24 @@ newfs_msdos_main(int argc, char *argv[])
     if (x1 + (u_int64_t)x * bpb.nft > bpb.bsec)
 	errx(1, "meta data exceeds file system size");
     x1 += x * bpb.nft;
+    if ((fat == 32) && (bpb.bspf == 0)) {
+    	if( bpb.bsec > 256*1024 ) {
+    		u_int tmp_x = (u_int64_t)(bpb.bsec - x1) * bpb.bps * NPB /
+	                  (bpb.spc * bpb.bps * NPB + fat / BPN * bpb.nft);
+		    u_int tmp_x2 = howmany((RESFTE + MIN(tmp_x, maxcls(fat))) * (fat / BPN),
+				           bpb.bps * NPB);
+		    int sectors_per_fatsector = (bpb.bps / 4) * bpb.spc;
+		    int unalign_sectors = (tmp_x2 % bpb.spc) * sectors_per_fatsector;
+		    printf("bpb.bsec = %d\n", bpb.bsec);
+		    printf("sectors_per_fatsector = %d\n", sectors_per_fatsector);
+		    printf("tmp_x = %d\n", tmp_x);
+		    printf("tmp_x2 = %d\n", tmp_x2);
+		    printf("unalign_sectors = %d\n", unalign_sectors);
+		    if( bpb.bsec > unalign_sectors )
+		    	bpb.bsec -= unalign_sectors;              	
+		    printf("bpb.bsec = %d\n", bpb.bsec);
+    	}        
+    }
     x = (u_int64_t)(bpb.bsec - x1) * bpb.bps * NPB /
 	(bpb.spc * bpb.bps * NPB + fat / BPN * bpb.nft);
     x2 = howmany((RESFTE + MIN(x, maxcls(fat))) * (fat / BPN),

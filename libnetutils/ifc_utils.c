@@ -415,6 +415,19 @@ int ifc_clear_addresses(const char *name) {
     return ifc_clear_ipv6_addresses(name);
 }
 
+/*  Begin rename interface name (add by shuge@allwinnertech.com  */
+int ifc_set_name(const char *name, const char *newname)
+{
+	struct ifreq ifr;
+	int ret;
+
+	ifc_init_ifr(name, &ifr);
+	memcpy(&ifr.ifr_newname, newname, sizeof(newname));
+
+    return ioctl(ifc_ctl_sock, SIOCSIFNAME, &ifr);
+}
+/*  End rename interface name (add by shuge@allwinnertech.com  */
+
 int ifc_set_hwaddr(const char *name, const void *ptr)
 {
     int r;

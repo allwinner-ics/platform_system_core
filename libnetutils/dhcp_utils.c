@@ -137,7 +137,10 @@ void get_daemon_suffix(const char *interface, char *daemon_suffix) {
     /* Use p2p suffix for any p2p interface. */
     if (strncmp(interface, "p2p",3) == 0) {
         sprintf(daemon_suffix, "p2p");
-    } else {
+    } else if (strncmp(interface, "eth_", 4) ==0) {
+        sprintf(daemon_suffix, "eth");
+		strlcpy(interface, interface + 4, strlen(interface + 4) + 1);
+	} else {
         snprintf(daemon_suffix, MAX_DAEMON_SUFFIX, "%s", interface);
     }
 }
